@@ -1,23 +1,44 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core'; // Asegúrate de importar Injectable
 import { HttpClient } from '@angular/common/http';
+import { Character, ApiResponse } from '../models/character';
 import { Observable } from 'rxjs';
-import { ApiResponse, Character } from '../models/character';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' // <-- ¡ESTA LÍNEA ES FUNDAMENTAL!
 })
 export class Api {
-  private readonly API_URL = ''; 
+  // ✅ URL base de la API
+  private readonly API_URL: string = 'https://rickandmortyapi.com/api/character';
 
-  private charactersSignal: any; // Define esto como una señal<Character[]>
+  // ✅ Inyectar HttpClient
+  private readonly http = inject(HttpClient);
 
-  public readonly characters: any; // Define esto como una señal de solo lectura
+  // ✅ Señal privada para manejar el estado de los personajes
+  private charactersSignal = signal<Character[]>([]);
 
-  getCharacters(): Observable<ApiResponse> {
-    throw new Error('Método no implementado');
+  // ✅ Señal pública de solo lectura
+  public readonly characters = this.charactersSignal.asReadonly();
+
+  // ✅ Método para obtener todos los personajes
+  public getCharacters(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.API_URL).pipe(
+      tap(response => this.charactersSignal.set(response.results))
+    );
   }
 
-  searchCharacters(name: string): Observable<ApiResponse> {
-    throw new Error('Método no implementado');
+  // ✅ Método para buscar personajes por nombre
+  public searchCharacters(name: string): Observable<ApiResponse> {
+    const trimmedName = name.trim();
+
+    if (!trimmedName) {
+      return this.getCharacters(); // Si está vacío, retornar todos
+    }
+
+    const searchUrl = `${this.API_URL}?name=${encodeURIComponent(trimmedName)}`;
+
+    return this.http.get<ApiResponse>(searchUrl).pipe(
+      tap(response => this.charactersSignal.set(response.results))
+    );
   }
 }

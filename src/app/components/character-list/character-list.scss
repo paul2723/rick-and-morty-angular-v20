@@ -1,0 +1,102 @@
+.character-container {
+  max-width: 1200px;
+  margin: 0 auto; /* Esto ya centra el contenedor horizontalmente */
+  padding: 2rem;
+  font-family: 'Orbitron', sans-serif;
+  color: #333333; /* Color de letra oscuro para contrastar con el fondo celeste */
+  background-color: lightskyblue; /* Fondo celeste */
+  /* Puedes usar un degradado celeste si lo prefieres: */
+  /* background: linear-gradient(135deg, #87CEEB, #ADD8E6, #B0E0E6); */
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 255, 0.2); /* Sombra ajustada a tonos azules */
+  text-align: center; /* Centra el contenido de texto dentro del contenedor */
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+
+  input {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+    width: 300px;
+    background-color: #e0f2f7; /* Fondo más claro para el input */
+    color: #333333; /* Texto oscuro en el input */
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3); /* Sombra ajustada */
+    outline: none;
+  }
+
+  button {
+    padding: 0.8rem 1.5rem;
+    background-color: #007bff; /* Un azul más estándar para el botón */
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffffff; /* Letra blanca para el botón azul */
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      background-color: #0056b3; /* Tono más oscuro al pasar el mouse */
+    }
+  }
+}
+
+.loading-state,
+.error-state,
+.empty-state {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #cc0000; /* Un rojo más oscuro para mejor legibilidad */
+}
+
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  justify-items: center; /* Centra las tarjetas dentro de la cuadrícula */
+}
+
+.character-card {
+  background-color: rgba(255, 255, 255, 0.7); /* Fondo más opaco y claro para las tarjetas */
+  border: 2px solid #007bff; /* Borde azul */
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.3); /* Sombra azul */
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(0, 123, 255, 0.5);
+  }
+
+  .character-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 2px solid #007bff; /* Borde inferior azul */
+  }
+
+  .character-info {
+    padding: 1rem;
+
+    h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #0056b3; /* Azul oscuro para los títulos de personaje */
+    }
+
+    p {
+      margin: 0.2rem 0;
+      color: #333333; /* Letra oscura para la información del personaje */
+    }
+  }
+}
